@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Persona
 
+from rest_framework import viewsets
+from .serializers import PersonaSerializer
 def index(request):
     personas = Persona.objects.order_by('nombre')
     context = {
@@ -22,3 +24,7 @@ def detail (request, persona_id):
         
         }
     return render(request, 'persona.html', context)
+
+class PersonaViewSet(viewsets.ModelViewSet):
+    queryset = Persona.objects.all()
+    serializer_class = PersonaSerializer
